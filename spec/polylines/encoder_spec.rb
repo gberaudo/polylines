@@ -26,3 +26,9 @@ describe Polylines::Encoder, ".encode_points with same results as google's api" 
     Polylines::Encoder.encode_points([[39.13594499,-94.4243478],[39.13558757,-94.4243471]]).should == "svzmFdgi_QdA?"
   end
 end
+
+describe Polylines::Encoder, ".encode_points with elevation" do
+  it "encodes two points" do
+    Polylines::Encoder.encode_points([[39.13594499,-94.4243478, 23.23423],[39.13558757,-94.4243471, 53.34234]], true).should == "svzmFdgi_Q}|xlCdA?unwvD"
+  end
+end

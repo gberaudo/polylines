@@ -20,3 +20,9 @@ describe Polylines::Decoder, ".decode_polyline with points that were close toget
     Polylines::Decoder.decode_polyline("krk{FdxdlO?e@").should == [[41.35222, -86.04563],[41.35222, -86.04544]]
   end
 end
+
+describe Polylines::Decoder, ".decode_polyline with elevation and rounding" do
+  it "decodes a polyline correctly" do
+    Polylines::Decoder.decode_polyline("svzmFdgi_Q}|xlCdA?unwvD", true).should == [[39.13594, -94.42435, 23.23423], [39.13559, -94.42435, 53.34234]]
+  end
+end

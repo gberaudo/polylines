@@ -1,7 +1,7 @@
 module Polylines
   class Encoder < Base
-    def self.encode_points(points)
-      points_with_deltas = transform_to_array_of_lat_lng_and_deltas(points)
+    def self.encode_points(points, use_elevation = nil)
+      points_with_deltas = transform_to_array_of_lat_lng_and_deltas(points, use_elevation)
       points_with_deltas.map {|point| encode(point) }.join
     end
 

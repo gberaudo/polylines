@@ -89,14 +89,18 @@ module Polylines
       self.is_a?(Polylines::Decoder)
     end
 
-    def self.transform_to_array_of_lat_lng_and_deltas(value)
+    def self.transform_to_array_of_lat_lng_and_deltas(value, use_elevation = nil)
       if self == Polylines::Encoder
-        delta_latitude, delta_longitude = 0, 0
+        delta_latitude, delta_longitude, delta_elevation = 0, 0, 0
 
         e5_values = value.map{|tuple| tuple.map{|val| (val * 1e5).round } }
-        deltas = e5_values.inject([]) do |polyline, (latitude, longitude)|
+        deltas = e5_values.inject([]) do |polyline, (latitude, longitude, elevation)|
           polyline << latitude - delta_latitude
           polyline << longitude - delta_longitude
+          if use_elevation
+            polyline << elevation - delta_elevation
+            delta_elevation = elevation
+          end
           delta_latitude, delta_longitude = latitude, longitude
           polyline
         end
