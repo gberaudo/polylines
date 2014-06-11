@@ -9,8 +9,8 @@ module Polylines
     def step_2
       @negative = current_value < 0 if encoding?
 
-      encode! { (current_value * 1e5).round }
-      decode! { current_value.to_f/1e5 }
+      encode! { (current_value * 1e6).round }
+      decode! { current_value.to_f/1e6 }
     end
 
     def step_3
@@ -93,7 +93,7 @@ module Polylines
       if self == Polylines::Encoder
         delta_latitude, delta_longitude, delta_elevation = 0, 0, 0
 
-        e5_values = value.map{|tuple| tuple.map{|val| (val * 1e5).round } }
+        e5_values = value.map{|tuple| tuple.map{|val| (val * 1e6).round } }
         deltas = e5_values.inject([]) do |polyline, (latitude, longitude, elevation)|
           polyline << latitude - delta_latitude
           polyline << longitude - delta_longitude
@@ -104,7 +104,7 @@ module Polylines
           delta_latitude, delta_longitude = latitude, longitude
           polyline
         end
-        return deltas.map{|val| val.to_f/1e5 }
+        return deltas.map{|val| val.to_f/1e6 }
       end
 
       if self == Polylines::Decoder
